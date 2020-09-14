@@ -11,8 +11,8 @@ export class MutateController {
 
   @Get()
   karenize(@Req() request: Request): string {
-    const sentence = request.query['sentence'] as string | undefined;
-    if (!sentence) return 'yOu NeEd tO pAsS sOmE dAtAaAaA';
+    const sentence = request.query['text'] as string | undefined;
+    if (!sentence) return 'yOu NeEd tO pAsS sOmE dAtA';
 
     return this._stringManipulation.karenize(sentence);
   }
