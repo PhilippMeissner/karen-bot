@@ -2,6 +2,13 @@ import { Controller, Get, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { StringManipulationService } from '../string-manipulation/string-manipulation.service';
 
+type failedResponse = string;
+
+interface SuccessResponse {
+  response_type: string;
+  text: string
+}
+
 @Controller('mutate')
 export class MutateController {
   constructor(
@@ -10,10 +17,13 @@ export class MutateController {
   }
 
   @Get()
-  karenize(@Req() request: Request): string {
+  karenize(@Req() request: Request): SuccessResponse | failedResponse {
     const sentence = request.query['text'] as string | undefined;
     if (!sentence) return 'yOu NeEd tO pAsS sOmE dAtA';
 
-    return this._stringManipulation.karenize(sentence);
+    return {
+      'response_type': 'in_channel',
+      text: this._stringManipulation.karenize(sentence),
+    };
   }
 }
